@@ -71,9 +71,24 @@ while True:
             
             protocol = int.from_bytes(rawpaket[9:10], byteorder='big')
             print("Protokoll:", protocol)
-    
+
+            print("")
+
+            packet_converterd = int.from_bytes(rawpaket, byteorder='big')
+
+            for i in range(0, len(rawpaket)*8-1):
+                # Shift-Operator, um das gewünschte Bit an die niedrigste Position zu bringen
+                shifted_value = packet_converterd >> i
+
+                # Bitmaske, um nur das niedrigste Bit zu behalten
+                result = shifted_value & 1
+                
+                print(i,result)
+                time.sleep(0.5)
+
+
             print("----------------------")
-            time.sleep(0.1)
+            time.sleep(0)
             destination = '{}.{}.{}.{}'.format(destination_ip[0],destination_ip[1],destination_ip[2],destination_ip[3])
             s.sendto(rawpaket, (destination, 0))
 
