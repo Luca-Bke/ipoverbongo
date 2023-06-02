@@ -5,6 +5,21 @@ import argparse
 
 
 
+
+
+
+def get_bytes(array):
+    if(len(array) >= 8):
+        x = int(0)
+        for i in range (0, len(array)):
+            mask = 1 << i
+            x = x | ((array[i] << i) & mask)
+        return x.to_bytes(math.ceil(len(array)/8), byteorder='big')
+
+
+
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--interface", help="Name of Network Interface")
 parser.add_argument("-rn1", "--routingNet1", help="Adress of Net to be routed")
@@ -76,6 +91,7 @@ while True:
 
             packet_converterd = int.from_bytes(rawpaket, byteorder='big')
 
+            bit_array = []
             for i in range(0, len(rawpaket)*8-1):
                 # Shift-Operator, um das gewünschte Bit an die niedrigste Position zu bringen
                 shifted_value = packet_converterd >> i
@@ -84,12 +100,13 @@ while True:
                 result = shifted_value & 1
                 
                 print(i,result)
+                bit_array.append(int(result))
                 time.sleep(0.5)
-
+            send_bytes = get_bytes(bit_array)
 
             print("----------------------")
             time.sleep(0)
             destination = '{}.{}.{}.{}'.format(destination_ip[0],destination_ip[1],destination_ip[2],destination_ip[3])
-            s.sendto(rawpaket, (destination, 0))
+            s.sendto(send_bytes, (destination, 0))
 
 
