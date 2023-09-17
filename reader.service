@@ -1,0 +1,13 @@
+[Unit]
+Description=Hello World
+After=multi-user.target
+
+[Service]
+StandardOutput=file:/home/th-owl/IPoB/log/reader_out.log
+StandardError=file:/home/th-owl/IPoB/log/reader_err.log
+Type=simple
+ExecStart=/usr/bin/python3 /home/th-owl/IPoB/reader.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+READER:
+  # Which IP Net should be routed over Bongo Drums:
+  ROUTING:
+    IP_NET: "10.0.1.0"
+    IP_SUFFIX: 24
+  INTERFACE_NAME: "eth0"
+  TRANSMIT_FREQUENCY: 1
+  HOLD_TIME: 0.08
+  GPIO_PINS:
+    ZERO: 12
+    ONE: 16
+    STATUS: 20
